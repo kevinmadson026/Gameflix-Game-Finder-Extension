@@ -10,7 +10,10 @@ I also strongly recommend downloading the wizzardsk_games_database.json file on 
 
 https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive_link
 
+
 <img width="349" height="614" alt="image" src="https://github.com/user-attachments/assets/a672070a-ee2a-40eb-9a7f-7dbf18aed158" />
+<img width="313" height="511" alt="image" src="https://github.com/user-attachments/assets/52ab3129-2c24-48e9-9f01-33f72fb0cbf9" />
+
 
 
 ---
