@@ -29,7 +29,7 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
   * Quick **Select All** and **Deselect All** buttons
 * **Instant Game Search:** Real-time search bar to find games instantly by name
 * **Multi-Language Support:** Easily switch between **English (EN)** (default) and **Portuguese (PT-BR)** directly from the header
-* **Favorites:** Easily save your favorite games to easily play them.
+* **Favorites:** Save all your favorite games to quickly click and play!
 
 ---
 
