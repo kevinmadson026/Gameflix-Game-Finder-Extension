@@ -48,8 +48,8 @@ To install and run this extension locally in Google Chrome, follow these steps:
 
 1. **First Run / Syncing:**
    * Click the extension icon in your toolbar to open the popup.
-   * If the database is empty, click **Sync Again (Online)** to fetch all systems and games automatically[cite: 1, 4]. You can monitor the real-time progress right on the screen.
-   * Alternatively, if you already have a JSON backup, click **Import Database** to load it instantly[cite: 4].
+   * If the database is empty, click **Sync Again (Online)** to fetch all systems and games automatically, You can monitor the real-time progress right on the screen.
+   * Alternatively, click **Import Database** to load wizzardsk_games_database.json with all games
 
 2. **Searching & Filtering:**
    * Type any game title into the main search box to filter results in real-time
