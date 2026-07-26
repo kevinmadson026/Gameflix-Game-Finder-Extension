@@ -56,6 +56,11 @@ To install and run this extension locally in Google Chrome, follow these steps:
    * Click the extension icon in your toolbar to open the popup.
    * If the database is empty, click **Sync Again (Online)** to fetch all systems and games automatically, You can monitor the real-time progress right on the screen.
    * Alternatively, click **Import Database** to load wizzardsk_games_database.json with all games
+  
+     This scanning process usually takes quite a while—after all, there are thousands of games across 239 different systems.
+If you prefer, here’s a link to download the database and import it directly into the extension, which will speed up the process.
+
+https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive_link
 
 2. **Searching & Filtering:**
    * Type any game title into the main search box to filter results in real-time
@@ -70,12 +75,6 @@ To install and run this extension locally in Google Chrome, follow these steps:
 
 ---
 
-## 📦 Permissions Used
-
-* `storage`: To save your game database and language preferences locally
-* `scripting` & `tabs`: Used temporarily in the background to safely render pages and extract game data during synchronization
-* `unlimitedStorage`: Ensures enough local storage capacity to hold large game libraries
-
-
+Thanks WizzardSK for Gameflix
 
 
