@@ -6,7 +6,7 @@ It allows you to explore hundreds of systems and thousands of games right from y
 ALERT: This extension only works with the following project: https://github.com/WizzardSK/gameflix
 which must be installed on your computer in order to play the vast majority of games
 
-I also strongly recommend downloading the wizzardsk_games_database.json file and importing it into the extension on Gdrive link above, which already contains a list of all games and eliminates the need for the time-consuming sync process.
+I also strongly recommend downloading the wizzardsk_games_database.json file on Gdrive link above and importing it into the extension, because it already contains a list of all games and eliminates the need for the time-consuming sync process.
 https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive_link
 
 <img width="349" height="614" alt="image" src="https://github.com/user-attachments/assets/a672070a-ee2a-40eb-9a7f-7dbf18aed158" />
