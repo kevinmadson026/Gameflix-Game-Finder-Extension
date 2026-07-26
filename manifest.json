@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Wizzardsk Game Finder",
+  "version": "1.0",
+  "description": "Varre sistemas e cataloga jogos do wizzardsk.github.io em um popup com filtro.",
+  "permissions": [
+    "storage",
+    "scripting",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://wizzardsk.github.io/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
