@@ -1,6 +1,6 @@
 # WizzardSK Game Finder
 
-**WizzardSK Game Finder** is a powerful Google Chrome extension designed to scan, catalog, and search games from https://wizzardsk.github.io/
+**WizzardSK Game Finder** is a Google Chrome extension designed to scan, catalog, and search games from https://wizzardsk.github.io/
 It allows you to explore hundreds of systems and thousands of games right from your browser popup, filter by console, play games with a single click
 
 ALERT: This extension only works with the following project: https://github.com/WizzardSK/gameflix
