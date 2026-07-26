@@ -50,7 +50,7 @@ To install and run this extension locally in Google Chrome, follow these steps:
    * Select the folder where you saved your extension files.
 
 5. **Pin to Toolbar:** 
-   * Click the Extensions puzzle icon in Chrome and pin **Wizzardsk Game Finder** for quick and easy access.
+   * Click the Extensions puzzle icon in Chrome and pin **Wizzardsk Game Finder** for quick and easy access ANYWHERE.
 
 ---
 
