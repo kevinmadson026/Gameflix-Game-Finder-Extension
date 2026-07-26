@@ -68,7 +68,7 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
 
 2. **Searching & Filtering:**
    * Type any game title into the main search box to filter results in real-time
-   * Use the **Filter by Consoles** section to check or uncheck specific systems You can use the mini search bar inside the filter box to quickly find a specific console among hundreds[cite: 4].
+   * Use the **Filter by Consoles** section to check or uncheck specific systems You can use the mini search bar inside the filter box to quickly find a specific console among hundreds
 
 3. **Playing Games:**
    * Click on any game item in the list, and it will automatically open its direct link in a new browser tab
