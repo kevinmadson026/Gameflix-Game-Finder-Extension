@@ -3,6 +3,9 @@
 **Wizzardsk Game Finder** is a powerful Google Chrome extension (built with Manifest V3) designed to scan, catalog, and search games from https://wizzardsk.github.io/
 It allows you to explore hundreds of systems and thousands of games right from your browser popup, filter by console, play games with a single click
 
+<img width="349" height="614" alt="image" src="https://github.com/user-attachments/assets/a672070a-ee2a-40eb-9a7f-7dbf18aed158" />
+
+
 ---
 
 ## 🚀 Key Features
