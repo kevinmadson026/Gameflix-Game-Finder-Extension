@@ -21,10 +21,19 @@
     .console-list { max-height: 100px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 4px; background: #fff; margin-bottom: 5px; }
     .console-item { font-size: 11px; display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
     
+    .favorites-checkbox-container { margin-bottom: 10px; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+    .favorites-checkbox-container label { cursor: pointer; display: flex; align-items: center; gap: 5px; user-select: none; }
+
     .game-list { max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; }
-    .game-item { padding: 6px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; }
+    .game-item { padding: 6px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .game-item:hover { background-color: #f1f1f1; }
+    .game-info { flex: 1; overflow: hidden; }
     .system-name { display: block; font-size: 10px; color: #888; }
+    
+    .favorite-star { font-size: 16px; cursor: pointer; color: #ccc; margin-left: 8px; user-select: none; transition: color 0.2s; }
+    .favorite-star:hover { color: #e0a800; }
+    .favorite-star.active { color: #ffc107; }
+
     .row { display: flex; gap: 5px; }
     .row button, .row .btn-file { flex: 1; }
   </style>
@@ -41,6 +50,13 @@
   <div id="status">Loading...</div>
   
   <input type="text" id="searchInput" placeholder="Search game...">
+
+  <div class="favorites-checkbox-container">
+    <label>
+      <input type="checkbox" id="showFavoritesOnly">
+      <span id="favoritesFilterLabel">Show Favorites Only</span>
+    </label>
+  </div>
   
   <div class="filter-container">
     <div class="filter-header" id="filterHeaderTitle">Filter by Consoles</div>

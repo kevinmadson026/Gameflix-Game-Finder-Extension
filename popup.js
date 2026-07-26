@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const importFileLabel = document.getElementById('importFileLabel');
   const searchInput = document.getElementById('searchInput');
   const searchConsoleInput = document.getElementById('searchConsoleInput');
+  const showFavoritesOnly = document.getElementById('showFavoritesOnly');
+  const favoritesFilterLabel = document.getElementById('favoritesFilterLabel');
   const gameList = document.getElementById('gameList');
   const statusDiv = document.getElementById('status');
   const consoleList = document.getElementById('consoleList');
@@ -17,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let allGames = [];
   let availableConsoles = [];
   let selectedConsoles = new Set();
-  let currentLang = 'en'; // Padrão é Inglês
+  let favorites = new Set();
+  let currentLang = 'en';
   let currentStatusState = { key: 'noGamesInitial', args: [] };
 
   const translations = {
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
       noGames: "No games found.",
       noGamesInitial: "No games found. Sync or import a database.",
       searchGamePlaceholder: "Search game...",
+      favoritesFilterLabel: "Show Favorites Only",
       filterConsolesTitle: "Filter by Consoles",
       searchConsolePlaceholder: "Filter consoles...",
       selectAll: "Select All",
@@ -51,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       noGames: "Nenhum jogo encontrado.",
       noGamesInitial: "Nenhum jogo encontrado. Sincronize ou importe um banco.",
       searchGamePlaceholder: "Pesquisar jogo...",
+      favoritesFilterLabel: "Mostrar Apenas Favoritos",
       filterConsolesTitle: "Filtrar por Consoles",
       searchConsolePlaceholder: "Filtrar consoles...",
       selectAll: "Marcar Todos",
@@ -84,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateUItexts() {
     searchInput.placeholder = t('searchGamePlaceholder');
     searchConsoleInput.placeholder = t('searchConsolePlaceholder');
+    favoritesFilterLabel.textContent = t('favoritesFilterLabel');
     selectAllBtn.textContent = t('selectAll');
     deselectAllBtn.textContent = t('deselectAll');
     syncBtn.textContent = t('syncBtn');
@@ -93,10 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
     langSelect.value = currentLang;
   }
 
-  // Carrega configurações salvas (jogos e idioma)
-  chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang'], (result) => {
+  // Carrega configurações salvas (jogos, idioma e favoritos)
+  chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang', 'wizzardsk_favorites'], (result) => {
     if (result.wizzardsk_lang) {
       currentLang = result.wizzardsk_lang;
+    }
+    if (result.wizzardsk_favorites && Array.isArray(result.wizzardsk_favorites)) {
+      favorites = new Set(result.wizzardsk_favorites);
     }
     updateUItexts();
 
@@ -116,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.local.set({ wizzardsk_lang: currentLang });
     updateUItexts();
     filterAndRender();
-    // Traduz o status atual instantaneamente para o novo idioma
     setStatus(currentStatusState.key, ...currentStatusState.args);
   });
 
@@ -164,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   searchConsoleInput.addEventListener('input', renderConsoles);
+  showFavoritesOnly.addEventListener('change', filterAndRender);
 
   selectAllBtn.addEventListener('click', () => {
     availableConsoles.forEach(system => selectedConsoles.add(system));
@@ -179,11 +188,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function filterAndRender() {
     const query = searchInput.value.toLowerCase();
+    const onlyFavs = showFavoritesOnly.checked;
 
     const filtered = allGames.filter(g => {
       const matchesSearch = g.name.toLowerCase().includes(query);
       const matchesConsole = selectedConsoles.has(g.system);
-      return matchesSearch && matchesConsole;
+      const gameKey = g.url || (g.name + '_' + g.system);
+      const matchesFav = !onlyFavs || favorites.has(gameKey);
+      return matchesSearch && matchesConsole && matchesFav;
     });
 
     renderGames(filtered);
@@ -261,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderGames(games) {
     gameList.innerHTML = '';
     if (games.length === 0) {
-      gameList.innerHTML = `<div class="game-item">${t('noGames')}</div>`;
+      gameList.innerHTML = `<div class="game-item" style="justify-content: center;">${t('noGames')}</div>`;
       return;
     }
 
@@ -269,9 +281,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayGames = games.slice(0, maxDisplay);
 
     displayGames.forEach(game => {
+      const gameKey = game.url || (game.name + '_' + game.system);
+      const isFav = favorites.has(gameKey);
+
       const div = document.createElement('div');
       div.className = 'game-item';
-      div.innerHTML = `<strong>${escapeHtml(game.name)}</strong><span class="system-name">${escapeHtml(game.system)}</span>`;
+
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'game-info';
+      infoDiv.innerHTML = `<strong>${escapeHtml(game.name)}</strong><span class="system-name">${escapeHtml(game.system)}</span>`;
+      div.appendChild(infoDiv);
+
+      const starSpan = document.createElement('span');
+      starSpan.className = `favorite-star${isFav ? ' active' : ''}`;
+      starSpan.textContent = isFav ? '★' : '☆';
+      starSpan.title = currentLang === 'pt' ? 'Favoritar' : 'Favorite';
+
+      starSpan.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita abrir o link do jogo ao clicar na estrela
+        if (favorites.has(gameKey)) {
+          favorites.delete(gameKey);
+          starSpan.textContent = '☆';
+          starSpan.classList.remove('active');
+        } else {
+          favorites.add(gameKey);
+          starSpan.textContent = '★';
+          starSpan.classList.add('active');
+        }
+        chrome.storage.local.set({ wizzardsk_favorites: Array.from(favorites) });
+
+        // Se o filtro de apenas favoritos estiver ativo, atualiza a listagem na hora
+        if (showFavoritesOnly.checked) {
+          filterAndRender();
+        }
+      });
+
+      div.appendChild(starSpan);
       
       div.addEventListener('click', () => {
         if (game.url) {
@@ -286,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const info = document.createElement('div');
       info.className = 'game-item';
       info.style.color = '#888';
-      info.style.textAlign = 'center';
+      info.style.justifyContent = 'center';
       info.textContent = t('displayLimit', maxDisplay, games.length);
       gameList.appendChild(info);
     }
