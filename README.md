@@ -42,7 +42,7 @@ To install and run this extension locally in Google Chrome, follow these steps:
 
 Or...
 
-**Download the Files:** Download or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
+1. **Download the Files:** Download or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
    * `manifest.json`
    * `background.js`
    * `popup.html`
