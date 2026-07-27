@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchConsoleInput = document.getElementById('searchConsoleInput');
   const showFavoritesOnly = document.getElementById('showFavoritesOnly');
   const favoritesFilterLabel = document.getElementById('favoritesFilterLabel');
+  const showRecentOnly = document.getElementById('showRecentOnly');
+  const recentFilterLabel = document.getElementById('recentFilterLabel');
   const gameList = document.getElementById('gameList');
   const statusDiv = document.getElementById('status');
   const consoleList = document.getElementById('consoleList');
@@ -22,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let availableConsoles = [];
   let selectedConsoles = new Set();
   let favorites = new Set();
+  let recentPlayed = [];
   let currentLang = 'en';
   let currentStatusState = { key: 'noGamesInitial', args: [] };
 
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       noGamesInitial: "No games found. Sync or import a database.",
       searchGamePlaceholder: "Search game...",
       favoritesFilterLabel: "Show Favorites Only",
+      recentFilterLabel: "Recent Played Only",
       filterConsolesTitle: "Filter by Consoles",
       searchConsolePlaceholder: "Filter consoles...",
       selectAll: "Select All",
@@ -58,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       noGamesInitial: "Nenhum jogo encontrado. Sincronize ou importe um banco.",
       searchGamePlaceholder: "Pesquisar jogo...",
       favoritesFilterLabel: "Mostrar Apenas Favoritos",
+      recentFilterLabel: "Jogados Recentemente",
       filterConsolesTitle: "Filtrar por Consoles",
       searchConsolePlaceholder: "Filtrar consoles...",
       selectAll: "Marcar Todos",
@@ -92,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.placeholder = t('searchGamePlaceholder');
     searchConsoleInput.placeholder = t('searchConsolePlaceholder');
     favoritesFilterLabel.textContent = t('favoritesFilterLabel');
+    recentFilterLabel.textContent = t('recentFilterLabel');
     selectAllBtn.textContent = t('selectAll');
     deselectAllBtn.textContent = t('deselectAll');
     syncBtn.textContent = t('syncBtn');
@@ -101,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     langSelect.value = currentLang;
   }
 
-  // Toggle do painel de filtros de consoles
   toggleFilterBtn.addEventListener('click', () => {
     if (filterContent.style.display === 'none') {
       filterContent.style.display = 'block';
@@ -112,12 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang', 'wizzardsk_favorites'], (result) => {
+  chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang', 'wizzardsk_favorites', 'wizzardsk_recent'], (result) => {
     if (result.wizzardsk_lang) {
       currentLang = result.wizzardsk_lang;
     }
     if (result.wizzardsk_favorites && Array.isArray(result.wizzardsk_favorites)) {
       favorites = new Set(result.wizzardsk_favorites);
+    }
+    if (result.wizzardsk_recent && Array.isArray(result.wizzardsk_recent)) {
+      recentPlayed = result.wizzardsk_recent;
     }
     updateUItexts();
 
@@ -177,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
       label.style.cursor = 'pointer';
       label.style.flex = '1';
 
-      // Botão minimalista com quadradinho e check '✓'
       const onlyBtn = document.createElement('button');
       onlyBtn.className = 'only-btn';
       onlyBtn.textContent = '✓';
@@ -200,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   searchConsoleInput.addEventListener('input', renderConsoles);
   showFavoritesOnly.addEventListener('change', filterAndRender);
+  showRecentOnly.addEventListener('change', filterAndRender);
 
   selectAllBtn.addEventListener('click', () => {
     availableConsoles.forEach(system => selectedConsoles.add(system));
@@ -216,13 +224,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function filterAndRender() {
     const query = searchInput.value.toLowerCase();
     const onlyFavs = showFavoritesOnly.checked;
+    const onlyRecent = showRecentOnly.checked;
 
     const filtered = allGames.filter(g => {
       const matchesSearch = g.name.toLowerCase().includes(query);
       const matchesConsole = selectedConsoles.has(g.system);
       const gameKey = g.url || (g.name + '_' + g.system);
       const matchesFav = !onlyFavs || favorites.has(gameKey);
-      return matchesSearch && matchesConsole && matchesFav;
+      const matchesRecent = !onlyRecent || recentPlayed.includes(gameKey);
+
+      return matchesSearch && matchesConsole && matchesFav && matchesRecent;
     });
 
     renderGames(filtered);
@@ -314,6 +325,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const aTag = document.createElement('a');
       aTag.className = 'game-item';
       aTag.href = game.url || '#';
+      aTag.target = '_blank';
+
+      aTag.addEventListener('click', () => {
+        recentPlayed = recentPlayed.filter(k => k !== gameKey);
+        recentPlayed.unshift(gameKey);
+        
+        if (recentPlayed.length > 20) {
+          recentPlayed.pop();
+        }
+
+        chrome.storage.local.set({ wizzardsk_recent: recentPlayed });
+      });
 
       const infoDiv = document.createElement('div');
       infoDiv.className = 'game-info';
