@@ -38,23 +38,25 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
 
 To install and run this extension locally in Google Chrome, follow these steps:
 
-1. **Download the Files:** Download files on *releases* tab or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
-   * `manifest.json`
+1. **Download the Files:** Download files on *releases* tab or clone all the extension source files into a dedicated folder on your computer. 
+
+The folder should contain:
+    * `manifest.json`
    * `background.js`
    * `popup.html`
    * `popup.js`
 
-2. **Open Chrome Extensions:** 
+3. **Open Chrome Extensions:** 
    * Open Google Chrome and navigate to `chrome://extensions/` (or click the puzzle icon in the toolbar and select *Manage extensions*).
 
-3. **Enable Developer Mode:** 
+4. **Enable Developer Mode:** 
    * Toggle the **Developer mode** switch in the top-right corner of the extensions page.
 
-4. **Load the Extension:** 
+5. **Load the Extension:** 
    * Click the **Load unpacked** button in the top-left corner.
    * Select the folder where you saved your extension files.
 
-5. **Pin to Toolbar:** 
+6. **Pin to Toolbar:** 
    * Click the Extensions puzzle icon in Chrome and pin **Wizzardsk Game Finder** for quick and easy access ANYWHERE.
 
 ---
