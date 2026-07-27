@@ -16,7 +16,8 @@
     #langSelect { padding: 3px; font-size: 11px; cursor: pointer; }
 
     .filter-container { margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; padding: 6px; background: #f9f9f9; }
-    .filter-header { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
+    .filter-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .filter-header { font-size: 12px; font-weight: bold; }
     .console-search { width: 100%; padding: 5px; box-sizing: border-box; margin-bottom: 5px; font-size: 11px; }
     .console-list { max-height: 100px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 4px; background: #fff; margin-bottom: 5px; }
     .console-item { font-size: 11px; display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
@@ -34,7 +35,7 @@
     .favorite-star:hover { color: #e0a800; }
     .favorite-star.active { color: #ffc107; }
 	
-    /* Botão minimalista (quadradinho com check cinza) */
+    /* Botão minimalista */
     .only-btn { 
       background: #f8f9fa; 
       border: 1px solid #d6d8db; 
@@ -45,7 +46,6 @@
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      margin-left: auto; 
       border-radius: 3px; 
       cursor: pointer; 
       padding: 0;
@@ -62,7 +62,7 @@
 </head>
 <body>
   <div class="header-row">
-    <h3 id="appTitle">WizzardSK Game Finder</h3>
+    <h3 id="appTitle">Wizzardsk Game Finder</h3>
     <select id="langSelect">
       <option value="en">EN</option>
       <option value="pt">PT-BR</option>
@@ -81,13 +81,19 @@
   </div>
   
   <div class="filter-container">
-    <div class="filter-header" id="filterHeaderTitle">Filter by Consoles</div>
-    <input type="text" id="searchConsoleInput" class="console-search" placeholder="Filter consoles...">
-    <div class="row" style="margin-bottom: 5px;">
-      <button id="selectAllBtn" style="padding: 4px; font-size: 11px;">Select All</button>
-      <button id="deselectAllBtn" style="padding: 4px; font-size: 11px;">Deselect All</button>
+    <div class="filter-header-row">
+      <div class="filter-header" id="filterHeaderTitle">Filter by Consoles</div>
+      <!-- Iniciando com sinal de '+' e painel oculto por padrão -->
+      <button id="toggleFilterBtn" class="only-btn" title="Toggle console filter">+</button>
     </div>
-    <div class="console-list" id="consoleList"></div>
+    <div id="filterContent" style="display: none;">
+      <input type="text" id="searchConsoleInput" class="console-search" placeholder="Filter consoles...">
+      <div class="row" style="margin-bottom: 5px;">
+        <button id="selectAllBtn" style="padding: 4px; font-size: 11px;">Select All</button>
+        <button id="deselectAllBtn" style="padding: 4px; font-size: 11px;">Deselect All</button>
+      </div>
+      <div class="console-list" id="consoleList"></div>
+    </div>
   </div>
   
   <button id="syncBtn">Sync Again (Online)</button>

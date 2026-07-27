@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const langSelect = document.getElementById('langSelect');
   const appTitle = document.getElementById('appTitle');
   const filterHeaderTitle = document.getElementById('filterHeaderTitle');
+  const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+  const filterContent = document.getElementById('filterContent');
 
   let allGames = [];
   let availableConsoles = [];
@@ -98,6 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
     filterHeaderTitle.textContent = t('filterConsolesTitle');
     langSelect.value = currentLang;
   }
+
+  // Toggle do painel de filtros de consoles
+  toggleFilterBtn.addEventListener('click', () => {
+    if (filterContent.style.display === 'none') {
+      filterContent.style.display = 'block';
+      toggleFilterBtn.textContent = '-';
+    } else {
+      filterContent.style.display = 'none';
+      toggleFilterBtn.textContent = '+';
+    }
+  });
 
   chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang', 'wizzardsk_favorites'], (result) => {
     if (result.wizzardsk_lang) {
@@ -298,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const gameKey = game.url || (game.name + '_' + game.system);
       const isFav = favorites.has(gameKey);
 
-      // Usando tag <a> nativa para imitar o comportamento de link web e evitar o aviso do protocolo
       const aTag = document.createElement('a');
       aTag.className = 'game-item';
       aTag.href = game.url || '#';
@@ -314,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
       starSpan.title = currentLang === 'pt' ? 'Favoritar' : 'Favorite';
 
       starSpan.addEventListener('click', (e) => {
-        e.preventDefault(); // Impede o clique na estrela de acionar o link do jogo
+        e.preventDefault(); 
         e.stopPropagation(); 
         
         if (favorites.has(gameKey)) {
