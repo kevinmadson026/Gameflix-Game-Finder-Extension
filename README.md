@@ -1,4 +1,4 @@
-# WizzardSK's GameFlix Game Finder
+<img width="722" height="229" alt="image" src="https://github.com/user-attachments/assets/179031c2-8e43-4405-b43a-8f6a2ba11725" /># WizzardSK's GameFlix Game Finder
 
 **WizzardSK Game Finder** is a Google Chrome extension designed to scan, catalog, and search games from https://wizzardsk.github.io/
 It allows you to explore hundreds of systems and thousands of games right from your browser popup, add to favorites, filter by console, and play games with a single click
@@ -38,13 +38,7 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
 
 To install and run this extension locally in Google Chrome, follow these steps:
 
-1. Go to the **Releases** tab, download the `.crx` file, and drag it into `chrome://extensions/` (make sure **Developer mode** is enabled).
-
-"That's all, folks!" You're all set and ready to play.
-
-Or...
-
-1. **Download the Files:** Download or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
+1. **Download the Files:** Download files on *releases* tab or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
    * `manifest.json`
    * `background.js`
    * `popup.html`
@@ -64,6 +58,8 @@ Or...
    * Click the Extensions puzzle icon in Chrome and pin **Wizzardsk Game Finder** for quick and easy access ANYWHERE.
 
 ---
+
+That's all, folks! You're all set and ready to play.
 
 ## 📖 How to Use
 
