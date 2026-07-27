@@ -1,4 +1,4 @@
-<img width="722" height="229" alt="image" src="https://github.com/user-attachments/assets/179031c2-8e43-4405-b43a-8f6a2ba11725" /># WizzardSK's GameFlix Game Finder
+# WizzardSK's GameFlix Game Finder
 
 **WizzardSK Game Finder** is a Google Chrome extension designed to scan, catalog, and search games from https://wizzardsk.github.io/
 It allows you to explore hundreds of systems and thousands of games right from your browser popup, add to favorites, filter by console, and play games with a single click
