@@ -12,7 +12,6 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
 
 <img width="315" height="577" alt="image" src="https://github.com/user-attachments/assets/b625ca33-39f5-402d-ae29-eaedcb9eab2c" />
 
-
 ---
 
 ## 🚀 Key Features
