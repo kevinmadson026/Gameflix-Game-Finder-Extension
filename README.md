@@ -40,6 +40,8 @@ To install and run this extension locally in Google Chrome, follow these steps:
 
 1. Go to the **Releases** tab, download the `.crx` file, and drag it into `chrome://extensions/` (make sure **Developer mode** is enabled).
 
+"That's all, folks!" You're all set and ready to play.
+
 Or...
 
 1. **Download the Files:** Download or clone all the extension source files into a dedicated folder on your computer. The folder should contain:
