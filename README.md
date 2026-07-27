@@ -30,6 +30,7 @@ https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive
 * **Instant Game Search:** Real-time search bar to find games instantly by name
 * **Multi-Language Support:** Easily switch between **English (EN)** (default) and **Portuguese (PT-BR)** directly from the header
 * **Favorites:** Save all your favorite games to quickly click and play!
+* **Recently Played:** Played an epic game but can't remember the name? No problem, here is your recent gaming history!
 
 ---
 
