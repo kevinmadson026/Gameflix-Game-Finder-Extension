@@ -65,6 +65,8 @@ To install and run this extension locally in Google Chrome, follow these steps:
    * If the database is empty, click **Sync Again (Online)** to fetch all systems and games automatically, You can monitor the real-time progress right on the screen.
    * Alternatively, click **Import Database** to load wizzardsk_games_database.json with all games
   
+     ⚠️ Important Note: When launching a game for the first time, your browser may prompt you to open Windows PowerShell. If available, make sure to check the "Always allow..." box to ensure future games launch seamlessly without interruption.
+  
      This scanning process usually takes quite a while—after all, there are thousands of games across 239 different systems.
 If you prefer, here’s a link to download the database and import it directly into the extension, which will speed up the process.
 
