@@ -4,8 +4,44 @@
   <meta charset="UTF-8">
   <title>Wizzardsk Game Finder</title>
   <style>
-    body { font-family: Arial, sans-serif; width: 320px; padding: 10px; margin: 0; box-sizing: border-box; }
-    input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; margin-bottom: 10px; }
+    body { font-family: Arial, sans-serif; width: 320px; padding: 10px; margin: 0; box-sizing: border-box; background-color: #fff; color: #333; }
+    
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
+
+    .search-row { display: flex; gap: 5px; margin-bottom: 10px; }
+    .search-row input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; margin-bottom: 0; flex: 1; }
+    .random-btn { 
+      width: 34px; 
+      height: 34px; 
+      padding: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 16px; 
+      background: #007bff; 
+      color: white; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+    .random-btn:hover { background: #0056b3; }
+
     button, .btn-file { width: 100%; padding: 8px; margin-bottom: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; text-align: center; display: block; box-sizing: border-box; font-size: 13px; }
     button:hover, .btn-file:hover { background: #0056b3; }
     button:disabled { background: #cccccc; cursor: not-allowed; }
@@ -13,10 +49,12 @@
     
     .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
     .header-row h3 { margin: 0; font-size: 14px; }
+    .header-controls { display: flex; gap: 5px; align-items: center; }
     #langSelect { padding: 3px; font-size: 11px; cursor: pointer; }
 
     .filter-container { margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; padding: 6px; background: #f9f9f9; }
-    .filter-header { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
+    .filter-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .filter-header { font-size: 12px; font-weight: bold; }
     .console-search { width: 100%; padding: 5px; box-sizing: border-box; margin-bottom: 5px; font-size: 11px; }
     .console-list { max-height: 100px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 4px; background: #fff; margin-bottom: 5px; }
     .console-item { font-size: 11px; display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
@@ -24,8 +62,8 @@
     .favorites-checkbox-container { margin-bottom: 10px; font-size: 12px; display: flex; align-items: center; gap: 5px; }
     .favorites-checkbox-container label { cursor: pointer; display: flex; align-items: center; gap: 5px; user-select: none; }
 
-    .game-list { max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; }
-    .game-item { padding: 6px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .game-list { max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; background: #fff; }
+    .game-item { padding: 6px; border-bottom: 1px solid #eee; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; }
     .game-item:hover { background-color: #f1f1f1; }
     .game-info { flex: 1; overflow: hidden; }
     .system-name { display: block; font-size: 10px; color: #888; }
@@ -33,39 +71,101 @@
     .favorite-star { font-size: 16px; cursor: pointer; color: #ccc; margin-left: 8px; user-select: none; transition: color 0.2s; }
     .favorite-star:hover { color: #e0a800; }
     .favorite-star.active { color: #ffc107; }
+	
+    .only-btn { 
+      background: #f8f9fa; 
+      border: 1px solid #d6d8db; 
+      color: #6c757d; 
+      font-size: 11px; 
+      width: 18px; 
+      height: 18px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      border-radius: 3px; 
+      cursor: pointer; 
+      padding: 0;
+    }
+    .only-btn:hover { 
+      background: #e2e6ea; 
+      border-color: #adb5bd; 
+      color: #495057; 
+    }
 
     .row { display: flex; gap: 5px; }
     .row button, .row .btn-file { flex: 1; }
+
+    /* Dark Mode Styles */
+    body.dark-mode { background-color: #1a1a1a; color: #e0e0e0; }
+    body.dark-mode input[type="text"], body.dark-mode .console-search { background-color: #2a2a2a; color: #fff; border: 1px solid #444; }
+    body.dark-mode input[type="text"]::placeholder, body.dark-mode .console-search::placeholder { color: #888; }
+    body.dark-mode select { background-color: #2a2a2a; color: #fff; border: 1px solid #444; }
+    body.dark-mode .filter-container { background-color: #222; border-color: #444; }
+    body.dark-mode .console-list { background-color: #2a2a2a; border-color: #444; }
+    body.dark-mode .game-list { background-color: #2a2a2a; border-color: #444; }
+    body.dark-mode .game-item { border-bottom-color: #333; color: #e0e0e0; }
+    body.dark-mode .game-item:hover { background-color: #333; }
+    body.dark-mode .system-name { color: #aaa; }
+    body.dark-mode .only-btn { background: #2d2d2d; border-color: #444; color: #ccc; }
+    body.dark-mode .only-btn:hover { background: #3d3d3d; border-color: #555; color: #fff; }
+    body.dark-mode #status { color: #aaa; }
+
+    /* Dark Mode Scrollbar */
+    body.dark-mode ::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    body.dark-mode ::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+    body.dark-mode ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   </style>
 </head>
 <body>
   <div class="header-row">
-    <h3 id="appTitle">Wizzardsk Game Finder</h3>
-    <select id="langSelect">
-      <option value="en">EN</option>
-      <option value="pt">PT-BR</option>
-    </select>
+    <h3 id="appTitle">WizzardSK Game Finder</h3>
+    <div class="header-controls">
+      <select id="langSelect">
+        <option value="en">EN</option>
+        <option value="pt">PT-BR</option>
+      </select>
+      <button id="themeToggleBtn" class="only-btn" style="width: 22px; height: 22px; font-size: 12px;" title="Toggle theme">🌙</button>
+    </div>
   </div>
   
   <div id="status">Loading...</div>
   
-  <input type="text" id="searchInput" placeholder="Search game...">
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="Search game...">
+    <button id="randomGameBtn" class="random-btn" title="Random game">🎲</button>
+  </div>
 
   <div class="favorites-checkbox-container">
     <label>
       <input type="checkbox" id="showFavoritesOnly">
       <span id="favoritesFilterLabel">Show Favorites Only</span>
     </label>
+    <label style="margin-left: 15px;">
+      <input type="checkbox" id="showRecentOnly">
+      <span id="recentFilterLabel">Recent Played Only</span>
+    </label>
   </div>
   
   <div class="filter-container">
-    <div class="filter-header" id="filterHeaderTitle">Filter by Consoles</div>
-    <input type="text" id="searchConsoleInput" class="console-search" placeholder="Filter consoles...">
-    <div class="row" style="margin-bottom: 5px;">
-      <button id="selectAllBtn" style="padding: 4px; font-size: 11px;">Select All</button>
-      <button id="deselectAllBtn" style="padding: 4px; font-size: 11px;">Deselect All</button>
+    <div class="filter-header-row">
+      <div class="filter-header" id="filterHeaderTitle">Filter by Consoles</div>
+      <button id="toggleFilterBtn" class="only-btn" title="Toggle console filter">+</button>
     </div>
-    <div class="console-list" id="consoleList"></div>
+    <div id="filterContent" style="display: none;">
+      <input type="text" id="searchConsoleInput" class="console-search" placeholder="Filter consoles...">
+      <div class="row" style="margin-bottom: 5px;">
+        <button id="selectAllBtn" style="padding: 4px; font-size: 11px;">Select All</button>
+        <button id="deselectAllBtn" style="padding: 4px; font-size: 11px;">Deselect All</button>
+      </div>
+      <div class="console-list" id="consoleList"></div>
+    </div>
   </div>
   
   <button id="syncBtn">Sync Again (Online)</button>
