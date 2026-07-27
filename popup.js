@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     langSelect.value = currentLang;
   }
 
-  // Carrega configurações salvas (jogos, idioma e favoritos)
   chrome.storage.local.get(['wizzardsk_games', 'wizzardsk_lang', 'wizzardsk_favorites'], (result) => {
     if (result.wizzardsk_lang) {
       currentLang = result.wizzardsk_lang;
@@ -119,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Mudança de Idioma
   langSelect.addEventListener('change', (e) => {
     currentLang = e.target.value;
     chrome.storage.local.set({ wizzardsk_lang: currentLang });
@@ -166,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       label.style.cursor = 'pointer';
       label.style.flex = '1';
 
-      // Botão minimalista em formato de quadradinho com '✓' cinza
+      // Botão minimalista com quadradinho e check '✓'
       const onlyBtn = document.createElement('button');
       onlyBtn.className = 'only-btn';
       onlyBtn.textContent = '✓';
@@ -300,13 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const gameKey = game.url || (game.name + '_' + game.system);
       const isFav = favorites.has(gameKey);
 
-      const div = document.createElement('div');
-      div.className = 'game-item';
+      // Usando tag <a> nativa para imitar o comportamento de link web e evitar o aviso do protocolo
+      const aTag = document.createElement('a');
+      aTag.className = 'game-item';
+      aTag.href = game.url || '#';
 
       const infoDiv = document.createElement('div');
       infoDiv.className = 'game-info';
       infoDiv.innerHTML = `<strong>${escapeHtml(game.name)}</strong><span class="system-name">${escapeHtml(game.system)}</span>`;
-      div.appendChild(infoDiv);
+      aTag.appendChild(infoDiv);
 
       const starSpan = document.createElement('span');
       starSpan.className = `favorite-star${isFav ? ' active' : ''}`;
@@ -314,7 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
       starSpan.title = currentLang === 'pt' ? 'Favoritar' : 'Favorite';
 
       starSpan.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.preventDefault(); // Impede o clique na estrela de acionar o link do jogo
+        e.stopPropagation(); 
+        
         if (favorites.has(gameKey)) {
           favorites.delete(gameKey);
           starSpan.textContent = '☆';
@@ -331,15 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      div.appendChild(starSpan);
-      
-      div.addEventListener('click', () => {
-        if (game.url) {
-          chrome.tabs.create({ url: game.url });
-        }
-      });
-
-      gameList.appendChild(div);
+      aTag.appendChild(starSpan);
+      gameList.appendChild(aTag);
     });
 
     if (games.length > maxDisplay) {
