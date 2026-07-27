@@ -164,9 +164,25 @@ document.addEventListener('DOMContentLoaded', () => {
       label.htmlFor = checkbox.id;
       label.textContent = system;
       label.style.cursor = 'pointer';
+      label.style.flex = '1';
+
+      // Botão minimalista em formato de quadradinho com '✓' cinza
+      const onlyBtn = document.createElement('button');
+      onlyBtn.className = 'only-btn';
+      onlyBtn.textContent = '✓';
+      onlyBtn.title = currentLang === 'pt' ? `Marcar apenas ${system}` : `Select only ${system}`;
+      
+      onlyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectedConsoles.clear();
+        selectedConsoles.add(system);
+        renderConsoles();
+        filterAndRender();
+      });
 
       div.appendChild(checkbox);
       div.appendChild(label);
+      div.appendChild(onlyBtn);
       consoleList.appendChild(div);
     });
   }
@@ -298,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       starSpan.title = currentLang === 'pt' ? 'Favoritar' : 'Favorite';
 
       starSpan.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita abrir o link do jogo ao clicar na estrela
+        e.stopPropagation();
         if (favorites.has(gameKey)) {
           favorites.delete(gameKey);
           starSpan.textContent = '☆';
@@ -310,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         chrome.storage.local.set({ wizzardsk_favorites: Array.from(favorites) });
 
-        // Se o filtro de apenas favoritos estiver ativo, atualiza a listagem na hora
         if (showFavoritesOnly.checked) {
           filterAndRender();
         }
