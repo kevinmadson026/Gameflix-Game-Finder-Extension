@@ -70,7 +70,7 @@ That's all, folks! You're all set and ready to play.
    * Alternatively, click **Import Database** to load wizzardsk_games_database.json with all games
   
      This scanning process usually takes quite a while—after all, there are thousands of games across 239 different systems.
-If you prefer, here’s a link to download the database and import it directly into the extension, which will speed up the process.
+If you prefer, here’s a link to download the database on link above or *releases* tab and import it directly into the extension, which will speed up the process.
 
 https://drive.google.com/file/d/1MOfpRoqhTbSAfgrBnPhiu7ro3nXH3N1t/view?usp=drive_link
 
